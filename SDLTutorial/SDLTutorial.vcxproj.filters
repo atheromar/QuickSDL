@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Helper">
       <UniqueIdentifier>{2b8bb8e5-2dde-41e7-b752-9be7509d23c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Visualizer">
+      <UniqueIdentifier>{16188fef-38c4-4e97-9ad7-de0660fc18ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Visualizer">
+      <UniqueIdentifier>{58bf13af-2f8a-4111-b6d4-c9ebd8195f56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MathHelper.h">
@@ -102,6 +108,9 @@
     <ClInclude Include="PerformanceTimer.h">
       <Filter>Header Files\Helper</Filter>
     </ClInclude>
+    <ClInclude Include="Visualizer.h">
+      <Filter>Header Files\Visualizer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -157,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="PerformanceTimer.cpp">
       <Filter>Source Files\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Visualizer.cpp">
+      <Filter>Source Files\Visualizer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
