@@ -8,6 +8,8 @@
 //---------------------------------------------------------------------//
 #include "GameManager.h"
 #include <time.h>
+#include <iostream>
+#include "PerformanceTimer.h"
 //-----------------------------------------------------------
 // QuickSDL
 //-----------------------------------------------------------
@@ -129,7 +131,7 @@ namespace QuickSDL {
 			}
 
 			//Limits the frame rate to FRAME_RATE
-			if(mTimer->DeltaTime() >= (1.0f / FRAME_RATE)) {
+			if (mTimer->DeltaTime() >= (1.0f / FRAME_RATE)) {
 
 				EarlyUpdate();
 				Update();

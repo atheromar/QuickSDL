@@ -99,6 +99,9 @@
     <ClInclude Include="Timer.h">
       <Filter>Header Files\Helper</Filter>
     </ClInclude>
+    <ClInclude Include="PerformanceTimer.h">
+      <Filter>Header Files\Helper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -150,6 +153,9 @@
       <Filter>Source Files\Helper</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="PerformanceTimer.cpp">
       <Filter>Source Files\Helper</Filter>
     </ClCompile>
   </ItemGroup>

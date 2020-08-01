@@ -14,6 +14,6 @@ namespace QuickSDL {
 
 	double PerfTimer::Stop()
 	{
-		return (std::chrono::high_resolution_clock::now() - mStartTime).count * 0.0000000001;
+		return (std::chrono::high_resolution_clock::now() - mStartTime).count() * 0.0000000001;
 	}
 }

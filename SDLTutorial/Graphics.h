@@ -32,7 +32,7 @@ namespace QuickSDL {
 		//The Height of the game's window
 		const int SCREEN_HEIGHT = 896;
 		//The title of the game's window
-		const char* WINDOW_TITLE = "Galaga";
+		const char* WINDOW_TITLE = "QuickSDL";
 
 	private:
 		//Needed to make GameManager a singleton class
