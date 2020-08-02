@@ -129,6 +129,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="InsertionSortAlg.h" />
     <ClInclude Include="MathHelper.h" />
     <ClInclude Include="PerformanceTimer.h" />
     <ClInclude Include="PhysEntity.h" />
@@ -151,6 +152,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InsertionSortAlg.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PerformanceTimer.cpp" />
     <ClCompile Include="PhysEntity.cpp" />
@@ -158,7 +160,6 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
-    <ClCompile Include="Visualizer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

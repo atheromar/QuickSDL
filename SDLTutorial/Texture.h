@@ -67,6 +67,8 @@ namespace QuickSDL {
 
 		Vector2 ScaledDimensions();
 
+		void MoveClipRect(int const& x, int const& y);
+
 		//----------------------------------------------
 		//Called to render the texture to the screen
 		//----------------------------------------------

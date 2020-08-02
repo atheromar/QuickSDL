@@ -85,6 +85,12 @@ namespace QuickSDL {
 		return scaledDimensions;
 	}
 
+	void Texture::MoveClipRect(int const& x, int const& y)
+	{
+		mClipRect.x = x;
+		mClipRect.y = y;
+	}
+
 	void Texture::Render() {
 
 		Vector2 pos = Pos(world);

@@ -10,6 +10,7 @@
 #include <time.h>
 #include <iostream>
 #include "PerformanceTimer.h"
+#include "InsertionSortAlg.h"
 //-----------------------------------------------------------
 // QuickSDL
 //-----------------------------------------------------------
@@ -62,6 +63,17 @@ namespace QuickSDL {
 		mPhysMgr->SetLayerCollisionMask(PhysicsManager::CollisionLayer::FriendlyProjectiles, PhysicsManager::CollisionFlags::Hostile);
 		mPhysMgr->SetLayerCollisionMask(PhysicsManager::CollisionLayer::Hostile, PhysicsManager::CollisionFlags::Friendly | PhysicsManager::CollisionFlags::FriendlyProjectiles);
 		mPhysMgr->SetLayerCollisionMask(PhysicsManager::CollisionLayer::HostileProjectiles, PhysicsManager::CollisionFlags::Friendly);
+
+		mVisualizer.Pos(Vector2(Graphics::Instance()->SCREEN_WIDTH * 0.5f, Graphics::Instance()->SCREEN_HEIGHT * 0.5f));
+
+		std::vector<int> randomNums;
+
+		for (int i = 0; i < 100; i++)
+		{
+			randomNums.push_back(rand() % 1000 + 1);
+		}
+
+		mVisualizer.Initialize(randomNums);
 	}
 
 	GameManager::~GameManager() {
@@ -94,6 +106,8 @@ namespace QuickSDL {
 	void GameManager::Update() {
 
 		//GameEntity Updates should happen here
+
+		mVisualizer.Update();
 	}
 
 	void GameManager::LateUpdate() {
@@ -111,6 +125,7 @@ namespace QuickSDL {
 		mGraphics->ClearBackBuffer();
 
 		//All other rendering is to happen here
+		mVisualizer.Render();
 
 		//Renders the current frame
 		mGraphics->Render();

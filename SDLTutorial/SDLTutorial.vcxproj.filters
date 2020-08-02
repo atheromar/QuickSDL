@@ -111,6 +111,9 @@
     <ClInclude Include="Visualizer.h">
       <Filter>Header Files\Visualizer</Filter>
     </ClInclude>
+    <ClInclude Include="InsertionSortAlg.h">
+      <Filter>Header Files\Visualizer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -167,7 +170,7 @@
     <ClCompile Include="PerformanceTimer.cpp">
       <Filter>Source Files\Helper</Filter>
     </ClCompile>
-    <ClCompile Include="Visualizer.cpp">
+    <ClCompile Include="InsertionSortAlg.cpp">
       <Filter>Source Files\Visualizer</Filter>
     </ClCompile>
   </ItemGroup>

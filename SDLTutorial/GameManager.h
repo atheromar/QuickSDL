@@ -15,6 +15,7 @@
 #include "AudioManager.h"
 #include "PhysicsManager.h"
 #include "Timer.h"
+#include "InsertionSortAlg.h"
 //----------------------------------------------------------------
 // QuickSDL
 //----------------------------------------------------------------
@@ -46,6 +47,8 @@ namespace QuickSDL {
 
 		// Used to catch the event when the user exits the game
 		SDL_Event mEvents;
+
+		Visualizer<InsertionSortAlg> mVisualizer;
 
 	public:
 		//-----------------------------------------
