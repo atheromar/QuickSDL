@@ -46,9 +46,6 @@ public:
 				items[m_i] = items[m_i + 1];
 				items[m_i + 1] = temp;
 
-				items[m_i]->UpdatePosition(m_i);
-				items[m_i + 1]->UpdatePosition(m_i + 1);
-
 				m_swapped = true;
 				++m_swaps;
 			}
@@ -69,10 +66,19 @@ public:
 			}
 		}
 
+		UpdatePositions(items);
 		UpdateHighlights(items);
 	}
 
 private:
+
+	void UpdatePositions(std::vector<VisualizerItem*>& items)
+	{
+		for (unsigned int i = 0; i < items.size(); i++)
+		{
+			items[i]->UpdatePosition(i);
+		}
+	}
 
 	void UpdateHighlights(std::vector<VisualizerItem*>& items)
 	{

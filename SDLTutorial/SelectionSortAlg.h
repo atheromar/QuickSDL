@@ -56,8 +56,6 @@ public:
 				VisualizerItem* temp = items[m_maxIndex];
 				items[m_maxIndex] = items[m_i];
 				items[m_i] = temp;
-				items[m_maxIndex]->UpdatePosition(m_maxIndex);
-				items[m_i]->UpdatePosition(m_i);
 
 				m_i--;
 				m_j = 0;
@@ -71,10 +69,19 @@ public:
 			m_sortingDone = true;
 		}
 
+		UpdatePositions(items);
 		UpdateHighlights(items);
 	}
 
 private:
+
+	void UpdatePositions(std::vector<VisualizerItem*>& items)
+	{
+		for (unsigned int i = 0; i < items.size(); i++)
+		{
+			items[i]->UpdatePosition(i);
+		}
+	}
 
 	void UpdateHighlights(std::vector<VisualizerItem*>& items)
 	{
