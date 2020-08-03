@@ -78,9 +78,9 @@ namespace QuickSDL {
 		mVisualizers.push_back(new Visualizer<SelectionSortAlg>());
 		mVisualizers.push_back(new Visualizer<BubbleSortAlg>());
 
-		mVisualizerGridDivisions = ceil(sqrt(mVisualizers.size()));
-		mVisualizerPanelWidth = Graphics::Instance()->SCREEN_WIDTH / mVisualizerGridDivisions;
-		mVisualizerPanelHeight = Graphics::Instance()->SCREEN_HEIGHT / mVisualizerGridDivisions;
+		mVisualizerGridDivisions = (unsigned int)(ceil(sqrt(mVisualizers.size())));
+		mVisualizerPanelWidth = Graphics::Instance()->SCREEN_WIDTH / (float)mVisualizerGridDivisions;
+		mVisualizerPanelHeight = Graphics::Instance()->SCREEN_HEIGHT / (float)mVisualizerGridDivisions;
 
 		for (unsigned int i = 0; i < mVisualizerGridDivisions; i++)
 		{
