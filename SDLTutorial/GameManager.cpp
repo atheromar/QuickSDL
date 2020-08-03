@@ -96,7 +96,8 @@ namespace QuickSDL {
 		}
 		mSelectedVisualizer = -1;
 
-		mFrameRate = 60;
+		m_stepDelay = 1.0f / FRAME_RATE;
+		m_stepTimer = 0.0f;
 	}
 
 	GameManager::~GameManager() {
@@ -132,12 +133,17 @@ namespace QuickSDL {
 		mInputMgr->Update();
 	}
 
-	void GameManager::Update() {
-
+	void GameManager::Update() 
+	{
 		//GameEntity Updates should happen here
-		for (unsigned int i = 0; i < mVisualizers.size(); i++)
+		m_stepTimer += mTimer->DeltaTime();
+		if (m_stepTimer >= m_stepDelay)
 		{
-			mVisualizers[i]->Update();
+			for (unsigned int i = 0; i < mVisualizers.size(); i++)
+			{
+				mVisualizers[i]->Update();
+			}
+			m_stepTimer = 0.0f;
 		}
 
 		if (mSelectedVisualizer == -1)
@@ -161,7 +167,7 @@ namespace QuickSDL {
 		}
 		else
 		{
-			if (mInputMgr->MouseButtonPressed(InputManager::right))
+			if (mInputMgr->MouseButtonPressed(InputManager::left))
 			{
 				int row = (int)(mSelectedVisualizer / mVisualizerGridDivisions);
 				int col = mSelectedVisualizer % mVisualizerGridDivisions;
@@ -172,16 +178,16 @@ namespace QuickSDL {
 			}
 		}
 
-		if (mInputMgr->KeyDown(SDL_SCANCODE_KP_PLUS))
+		if (mInputMgr->KeyPressed(SDL_SCANCODE_KP_PLUS))
 		{
-			++mFrameRate;
+			m_stepDelay -= (1.0f / FRAME_RATE);
+
+			if (m_stepDelay < 0.0f)
+				m_stepDelay = 0.0f;
 		}
-		else if (mInputMgr->KeyDown(SDL_SCANCODE_KP_MINUS))
+		else if (mInputMgr->KeyPressed(SDL_SCANCODE_KP_MINUS))
 		{
-			if (mFrameRate > 1)
-			{
-				--mFrameRate;
-			}
+			m_stepDelay += (1.0f / FRAME_RATE);
 		}
 	}
 
@@ -228,7 +234,7 @@ namespace QuickSDL {
 			}
 
 			//Limits the frame rate to FRAME_RATE
-			if (mTimer->DeltaTime() >= (1.0f / mFrameRate)) {
+			if (mTimer->DeltaTime() >= (1.0f / FRAME_RATE) || mTimer->DeltaTime() >= m_stepDelay) {
 
 				EarlyUpdate();
 				Update();

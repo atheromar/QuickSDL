@@ -30,7 +30,7 @@ namespace QuickSDL {
 		static GameManager* sInstance;
 
 		//The target frame rate of the game
-		unsigned int mFrameRate = 60;
+		const int FRAME_RATE = 100;
 
 		//Used to exit the game loop
 		bool mQuit;
@@ -55,6 +55,8 @@ namespace QuickSDL {
 		float mVisualizerPanelWidth;
 		float mVisualizerPanelHeight;
 
+		float m_stepDelay;
+		float m_stepTimer;
 
 	public:
 		//-----------------------------------------
