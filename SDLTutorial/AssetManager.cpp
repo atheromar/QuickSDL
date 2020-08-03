@@ -96,7 +96,6 @@ namespace QuickSDL {
 		//Get the full path of the file
 		char* basePath = SDL_GetBasePath();
 		std::string fullPath = SDL_GetBasePath();
-		;
 		fullPath.append("Assets/" + filename);
 
 		//If the file has not been already loaded, load it and add it to the mTextures map
