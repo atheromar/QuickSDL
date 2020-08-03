@@ -11,11 +11,24 @@ public:
 		m_i = 0;
 		m_j = m_i;
 		m_sortingDone = false;
+
+		m_comparisons = 0;
+		m_swaps = 0;
 	}
 
 	std::string GetName()
 	{
 		return "Insertion Sort";
+	}
+
+	unsigned int const& GetComparisons()
+	{
+		return m_comparisons;
+	}
+
+	unsigned int const& GetSwaps()
+	{
+		return m_swaps;
 	}
 
 	void SortStep(std::vector<VisualizerItem*>& items)
@@ -26,6 +39,7 @@ public:
 
 			if (m_j > 0)
 			{
+				++m_comparisons;
 				if (items[m_j]->GetValue() < items[m_j - 1]->GetValue()) 
 				{
 
@@ -36,6 +50,7 @@ public:
 					items[m_j]->UpdatePosition(m_j);
 					items[m_j - 1]->UpdatePosition(m_j - 1);
 					swapped = true;
+					++m_swaps;
 				}
 				--m_j;
 			}
@@ -81,8 +96,11 @@ private:
 
 private:
 
+	bool m_sortingDone;
+
 	unsigned int m_i;
 	unsigned int m_j;
 
-	bool m_sortingDone;
+	unsigned int m_comparisons;
+	unsigned int m_swaps;
 };

@@ -12,11 +12,24 @@ public:
 		m_sortingDone = false;
 		m_i = 0;
 		m_iteration = 0;
+
+		m_comparisons = 0;
+		m_swaps = 0;
 	}
 
 	std::string GetName()
 	{
 		return "Bubble Sort";
+	}
+
+	unsigned int const& GetComparisons()
+	{
+		return m_comparisons;
+	}
+
+	unsigned int const& GetSwaps()
+	{
+		return m_swaps;
 	}
 
 	void SortStep(std::vector<VisualizerItem*>& items)
@@ -26,6 +39,7 @@ public:
 
 		if (m_i < items.size() - 1)
 		{
+			++m_comparisons;
 			if (items[m_i]->GetValue() > items[m_i + 1]->GetValue()) {
 
 				VisualizerItem* temp = items[m_i];
@@ -36,6 +50,7 @@ public:
 				items[m_i + 1]->UpdatePosition(m_i + 1);
 
 				m_swapped = true;
+				++m_swaps;
 			}
 			++m_i;
 
@@ -89,4 +104,7 @@ private:
 
 	unsigned int m_i;
 	unsigned int m_iteration;
+
+	unsigned int m_comparisons;
+	unsigned int m_swaps;
 };

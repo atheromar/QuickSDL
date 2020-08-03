@@ -108,6 +108,20 @@ public:
 
 		delete m_title;
 		m_title = nullptr;
+
+		for (unsigned int i = 0; i < m_comparisons.size(); i++)
+		{
+			delete m_comparisons[i];
+			m_comparisons[i] = nullptr;
+		}
+		m_comparisons.clear();
+
+		for (unsigned int i = 0; i < m_swaps.size(); i++)
+		{
+			delete m_swaps[i];
+			m_swaps[i] = nullptr;
+		}
+		m_swaps.clear();
 	}
 
 	void Initialize(std::vector<int> const& vec) override
@@ -137,14 +151,60 @@ public:
 		{
 			m_items.push_back(new VisualizerItem(vec[i], maxValue, itemWidth, Graphics::Instance()->SCREEN_HEIGHT, i, m_anchor));
 		}
+	}
 
-		i = 0;
-		j = 0;
+	void UpdateNumbers()
+	{
+		for (unsigned int i = 0; i < m_comparisons.size(); i++)
+		{
+			delete m_comparisons[i];
+			m_comparisons[i] = nullptr;
+		}
+		m_comparisons.clear();
+
+		for (unsigned int i = 0; i < m_swaps.size(); i++)
+		{
+			delete m_swaps[i];
+			m_swaps[i] = nullptr;
+		}
+		m_swaps.clear();
+
+		Vector2 compStart(-(float)Graphics::Instance()->SCREEN_HEIGHT * 0.42f, (float)Graphics::Instance()->SCREEN_HEIGHT * 0.52f);
+		m_comparisons.push_back(new Texture("Comps:", "ariblk.ttf", 32, { 255, 255, 255 }));
+		m_comparisons[0]->Parent(this);
+		m_comparisons[0]->Scale(VEC2_ONE);
+		m_comparisons[0]->Pos(compStart);
+		std::string comps = std::to_string(m_sortingAlgorithm.GetComparisons());		
+		int lastIndex = (int)(comps.length() - 1);
+		for (int i = 0; i <= lastIndex; i++) {
+
+			m_comparisons.push_back(new Texture(comps.substr(i, 1), "ariblk.ttf", 32, { 255, 255, 255 }));
+			m_comparisons[i + 1]->Parent(this);
+			m_comparisons[i + 1]->Scale(VEC2_ONE);
+			m_comparisons[i + 1]->Pos(compStart + VEC2_RIGHT * 90.0f + VEC2_RIGHT * 25.0f * i);
+		}
+
+		Vector2 swapStart((float)Graphics::Instance()->SCREEN_HEIGHT * 0.3f, (float)Graphics::Instance()->SCREEN_HEIGHT * 0.52f);
+		m_swaps.push_back(new Texture("Swaps:", "ariblk.ttf", 32, { 255, 255, 255 }));
+		m_swaps[0]->Parent(this);
+		m_swaps[0]->Scale(VEC2_ONE);
+		m_swaps[0]->Pos(swapStart);
+		std::string swaps = std::to_string(m_sortingAlgorithm.GetSwaps());
+		lastIndex = (int)(swaps.length() - 1);
+		for (int i = 0; i <= lastIndex; i++) {
+
+			m_swaps.push_back(new Texture(swaps.substr(i, 1), "ariblk.ttf", 32, { 255, 255, 255 }));
+			m_swaps[i + 1]->Parent(this);
+			m_swaps[i + 1]->Scale(VEC2_ONE);
+			m_swaps[i + 1]->Pos(swapStart + VEC2_RIGHT * 90.0f + VEC2_RIGHT * 25.0f * i);
+		}
 	}
 
 	void Update() override
 	{
 		m_sortingAlgorithm.SortStep(m_items);
+
+		UpdateNumbers();
 	}
 
 	void Render() override
@@ -155,16 +215,26 @@ public:
 		}
 
 		m_title->Render();
+		for (unsigned int i = 0; i < m_comparisons.size(); i++)
+		{
+			m_comparisons[i]->Render();
+		}
+
+		for (unsigned int i = 0; i < m_swaps.size(); i++)
+		{
+			m_swaps[i]->Render();
+		}
 	}
 
 private:
 
 	Texture* m_title;
+
+	std::vector<Texture*> m_comparisons;
+	std::vector<Texture*> m_swaps;
+
 	GameEntity* m_anchor;
 	std::vector<VisualizerItem*> m_items;
 
 	T m_sortingAlgorithm;
-
-	int i;
-	int j;
 };

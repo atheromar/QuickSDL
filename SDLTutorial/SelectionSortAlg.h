@@ -17,6 +17,16 @@ public:
 		return "Selection Sort";
 	}
 
+	unsigned int const& GetComparisons()
+	{
+		return m_comparisons;
+	}
+
+	unsigned int const& GetSwaps()
+	{
+		return m_swaps;
+	}
+
 	void SortStep(std::vector<VisualizerItem*>& items)
 	{
 		if (m_firstStep)
@@ -25,12 +35,16 @@ public:
 			m_i = items.size() - 1;
 			m_j = 0;
 			m_maxIndex = m_i;
+
+			m_comparisons = 0;
+			m_swaps = 0;
 		}
 
 		if (m_i > 0)
 		{
 			if (m_j < m_i)
 			{
+				++m_comparisons;
 				if (items[m_maxIndex]->GetValue() < items[m_j]->GetValue()) {
 
 					m_maxIndex = m_j;
@@ -48,6 +62,8 @@ public:
 				m_i--;
 				m_j = 0;
 				m_maxIndex = m_i;
+				
+				++m_swaps;
 			}
 		}
 		else
@@ -95,4 +111,7 @@ private:
 	unsigned int m_i;
 	unsigned int m_j;
 	unsigned int m_maxIndex;
+
+	unsigned int m_comparisons;
+	unsigned int m_swaps;
 };

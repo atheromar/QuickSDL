@@ -94,12 +94,16 @@ namespace QuickSDL {
 
 	SDL_Texture* AssetManager::GetTexture(std::string filename) {
 		//Get the full path of the file
+		char* basePath = SDL_GetBasePath();
 		std::string fullPath = SDL_GetBasePath();
+		;
 		fullPath.append("Assets/" + filename);
 
 		//If the file has not been already loaded, load it and add it to the mTextures map
 		if(mTextures[fullPath] == nullptr)
 			mTextures[fullPath] = Graphics::Instance()->LoadTexture(fullPath);
+
+		SDL_free(basePath);
 
 		//returning the cached file from the map
 		return mTextures[fullPath];
@@ -108,7 +112,8 @@ namespace QuickSDL {
 	TTF_Font* AssetManager::GetFont(std::string filename, int size) {
 
 		//Get the full path of the font
-		std::string fullPath = SDL_GetBasePath();
+		char* basePath = SDL_GetBasePath();
+		std::string fullPath = basePath;
 		fullPath.append("Assets/" + filename);
 
 		//The key takes into account the size of the font aswell since the same font can be opened with different sizes
@@ -123,6 +128,8 @@ namespace QuickSDL {
 				printf("Font Loading Error: Font-%s Error-%s", filename.c_str(), TTF_GetError());
 		}
 
+		SDL_free(basePath);
+
 		//returning the cached font from the map
 		return mFonts[key];
 	}
@@ -134,11 +141,11 @@ namespace QuickSDL {
 
 		//The key takes into account the font, text, size, and color to differentiate text textures
 		std::string key = text + filename + (char)size + (char)color.r + (char)color.b + (char)color.g;
-
+		
 		//If the same text has not been rendered before, render it and add it to the mText map
 		if(mText[key] == nullptr)
 			mText[key] = Graphics::Instance()->CreateTextTexture(font, text, color);
-
+		
 		//returning the cached texture containing the text
 		return mText[key];
 	}
@@ -146,7 +153,8 @@ namespace QuickSDL {
 	Mix_Music* AssetManager::GetMusic(std::string filename) {
 
 		//Get the full path of the WAV file
-		std::string fullPath = SDL_GetBasePath();
+		char* basePath = SDL_GetBasePath();
+		std::string fullPath = basePath;
 		fullPath.append("Assets/" + filename);
 
 		//If the file has not been already loaded, load it and add it to the mMusic map
@@ -158,6 +166,8 @@ namespace QuickSDL {
 				printf("Music Loading Error: File-%s Error-%s", filename.c_str(), Mix_GetError());
 		}
 
+		SDL_free(basePath);
+
 		//returning the cached file from the map
 		return mMusic[fullPath];
 	}
@@ -165,7 +175,8 @@ namespace QuickSDL {
 	Mix_Chunk* AssetManager::GetSFX(std::string filename) {
 
 		//Get the full path of the WAV file
-		std::string fullPath = SDL_GetBasePath();
+		char* basePath = SDL_GetBasePath();
+		std::string fullPath = basePath;
 		fullPath.append("Assets/" + filename);
 
 		//If the file has not been already loaded, load it and add it to the mSFX map
@@ -176,6 +187,8 @@ namespace QuickSDL {
 			if(mSFX[fullPath] == NULL)
 				printf("SFX Loading Error: File-%s Error-%s", filename.c_str(), Mix_GetError());
 		}
+
+		SDL_free(basePath);
 
 		//returning the cached file from the map
 		return mSFX[fullPath];

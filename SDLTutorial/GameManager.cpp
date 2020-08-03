@@ -66,7 +66,6 @@ namespace QuickSDL {
 		mPhysMgr->SetLayerCollisionMask(PhysicsManager::CollisionLayer::Hostile, PhysicsManager::CollisionFlags::Friendly | PhysicsManager::CollisionFlags::FriendlyProjectiles);
 		mPhysMgr->SetLayerCollisionMask(PhysicsManager::CollisionLayer::HostileProjectiles, PhysicsManager::CollisionFlags::Friendly);
 
-
 		std::vector<int> randomNums;
 
 		for (int i = 0; i < 100; i++)
@@ -96,6 +95,8 @@ namespace QuickSDL {
 			}
 		}
 		mSelectedVisualizer = -1;
+
+		mFrameRate = 60;
 	}
 
 	GameManager::~GameManager() {
@@ -170,6 +171,18 @@ namespace QuickSDL {
 				mSelectedVisualizer = -1;
 			}
 		}
+
+		if (mInputMgr->KeyDown(SDL_SCANCODE_KP_PLUS))
+		{
+			++mFrameRate;
+		}
+		else if (mInputMgr->KeyDown(SDL_SCANCODE_KP_MINUS))
+		{
+			if (mFrameRate > 1)
+			{
+				--mFrameRate;
+			}
+		}
 	}
 
 	void GameManager::LateUpdate() {
@@ -215,7 +228,7 @@ namespace QuickSDL {
 			}
 
 			//Limits the frame rate to FRAME_RATE
-			if (mTimer->DeltaTime() >= (1.0f / FRAME_RATE)) {
+			if (mTimer->DeltaTime() >= (1.0f / mFrameRate)) {
 
 				EarlyUpdate();
 				Update();
