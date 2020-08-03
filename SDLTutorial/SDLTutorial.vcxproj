@@ -123,6 +123,7 @@
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="BezierPath.h" />
     <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="BubbleSortAlg.h" />
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="GameEntity.h" />
@@ -135,10 +136,12 @@
     <ClInclude Include="PhysEntity.h" />
     <ClInclude Include="PhysicsHelper.h" />
     <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="SelectionSortAlg.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="Visualizer.h" />
+    <ClInclude Include="VisualizerInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedTexture.cpp" />
@@ -152,7 +155,6 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="InsertionSortAlg.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PerformanceTimer.cpp" />
     <ClCompile Include="PhysEntity.cpp" />

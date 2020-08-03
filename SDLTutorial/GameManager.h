@@ -15,7 +15,7 @@
 #include "AudioManager.h"
 #include "PhysicsManager.h"
 #include "Timer.h"
-#include "InsertionSortAlg.h"
+#include "VisualizerInterface.h"
 //----------------------------------------------------------------
 // QuickSDL
 //----------------------------------------------------------------
@@ -30,7 +30,7 @@ namespace QuickSDL {
 		static GameManager* sInstance;
 
 		//The target frame rate of the game
-		const int FRAME_RATE = 60;
+		const int FRAME_RATE = 100;
 
 		//Used to exit the game loop
 		bool mQuit;
@@ -48,8 +48,12 @@ namespace QuickSDL {
 		// Used to catch the event when the user exits the game
 		SDL_Event mEvents;
 
-		Visualizer<InsertionSortAlg> mVisualizer;
-
+		std::vector<VisualizerInterface*> mVisualizers;
+		const float MAX_VISUALIZER_SCALE = 0.92f;
+		int mSelectedVisualizer;
+		unsigned int mVisualizerGridDivisions;
+		float mVisualizerPanelWidth;
+		float mVisualizerPanelHeight;
 	public:
 		//-----------------------------------------
 		//Returns a pointer to the class instance  

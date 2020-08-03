@@ -11,6 +11,8 @@
 #include <iostream>
 #include "PerformanceTimer.h"
 #include "InsertionSortAlg.h"
+#include "SelectionSortAlg.h"
+#include "BubbleSortAlg.h"
 //-----------------------------------------------------------
 // QuickSDL
 //-----------------------------------------------------------
@@ -64,7 +66,6 @@ namespace QuickSDL {
 		mPhysMgr->SetLayerCollisionMask(PhysicsManager::CollisionLayer::Hostile, PhysicsManager::CollisionFlags::Friendly | PhysicsManager::CollisionFlags::FriendlyProjectiles);
 		mPhysMgr->SetLayerCollisionMask(PhysicsManager::CollisionLayer::HostileProjectiles, PhysicsManager::CollisionFlags::Friendly);
 
-		mVisualizer.Pos(Vector2(Graphics::Instance()->SCREEN_WIDTH * 0.5f, Graphics::Instance()->SCREEN_HEIGHT * 0.5f));
 
 		std::vector<int> randomNums;
 
@@ -73,10 +74,37 @@ namespace QuickSDL {
 			randomNums.push_back(rand() % 1000 + 1);
 		}
 
-		mVisualizer.Initialize(randomNums);
+		mVisualizers.push_back(new Visualizer<InsertionSortAlg>());
+		mVisualizers.push_back(new Visualizer<SelectionSortAlg>());
+		mVisualizers.push_back(new Visualizer<BubbleSortAlg>());
+
+		mVisualizerGridDivisions = ceil(sqrt(mVisualizers.size()));
+		mVisualizerPanelWidth = Graphics::Instance()->SCREEN_WIDTH / mVisualizerGridDivisions;
+		mVisualizerPanelHeight = Graphics::Instance()->SCREEN_HEIGHT / mVisualizerGridDivisions;
+
+		for (unsigned int i = 0; i < mVisualizerGridDivisions; i++)
+		{
+			for (unsigned int j = 0; j < mVisualizerGridDivisions; j++)
+			{
+				unsigned int index = i * mVisualizerGridDivisions + j;
+				if (index < mVisualizers.size())
+				{
+					mVisualizers[index]->Initialize(randomNums);
+					mVisualizers[index]->Scale(VEC2_ONE * (MAX_VISUALIZER_SCALE / mVisualizerGridDivisions));
+					mVisualizers[index]->Pos(Vector2(mVisualizerPanelWidth * 0.5f + mVisualizerPanelWidth * j, mVisualizerPanelHeight * 0.5f + i * mVisualizerPanelHeight));
+				}
+			}
+		}
+		mSelectedVisualizer = -1;
 	}
 
 	GameManager::~GameManager() {
+
+		for (unsigned int i = 0; i < mVisualizers.size(); i++)
+		{
+			delete mVisualizers[i];
+			mVisualizers[i] = nullptr;
+		}
 
 		PhysicsManager::Release();
 		mPhysMgr = nullptr;
@@ -106,8 +134,42 @@ namespace QuickSDL {
 	void GameManager::Update() {
 
 		//GameEntity Updates should happen here
+		for (unsigned int i = 0; i < mVisualizers.size(); i++)
+		{
+			mVisualizers[i]->Update();
+		}
 
-		mVisualizer.Update();
+		if (mSelectedVisualizer == -1)
+		{
+			if (mInputMgr->MouseButtonPressed(InputManager::left))
+			{
+				Vector2 mousePos = mInputMgr->MousePos();
+				
+				int row = (int)(mousePos.y / mVisualizerPanelHeight);
+				int col = (int)(mousePos.x / mVisualizerPanelWidth);
+
+				unsigned int index = (unsigned int)(row * mVisualizerGridDivisions + col);
+
+				if (index < mVisualizers.size())
+				{
+					mSelectedVisualizer = index;
+					mVisualizers[mSelectedVisualizer]->Scale(VEC2_ONE * (MAX_VISUALIZER_SCALE));
+					mVisualizers[index]->Pos(Vector2(mGraphics->SCREEN_WIDTH * 0.5f, mGraphics->SCREEN_HEIGHT * 0.5f));
+				}
+			}
+		}
+		else
+		{
+			if (mInputMgr->MouseButtonPressed(InputManager::right))
+			{
+				int row = (int)(mSelectedVisualizer / mVisualizerGridDivisions);
+				int col = mSelectedVisualizer % mVisualizerGridDivisions;
+				mVisualizers[mSelectedVisualizer]->Scale(VEC2_ONE * (MAX_VISUALIZER_SCALE / mVisualizerGridDivisions));
+				mVisualizers[mSelectedVisualizer]->Pos(Vector2(mVisualizerPanelWidth * 0.5f + mVisualizerPanelWidth * col, mVisualizerPanelHeight * 0.5f + row * mVisualizerPanelHeight));
+
+				mSelectedVisualizer = -1;
+			}
+		}
 	}
 
 	void GameManager::LateUpdate() {
@@ -125,7 +187,14 @@ namespace QuickSDL {
 		mGraphics->ClearBackBuffer();
 
 		//All other rendering is to happen here
-		mVisualizer.Render();
+		for (unsigned int i = 0; i < mVisualizers.size(); i++)
+		{
+			if (mSelectedVisualizer == -1 || mSelectedVisualizer == i)
+			{
+				mVisualizers[i]->Render();
+			}
+		}
+		//mInsertionVisualizer.Render();
 
 		//Renders the current frame
 		mGraphics->Render();

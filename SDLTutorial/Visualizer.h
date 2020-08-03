@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Texture.h"
-#include <vector>
+#include "VisualizerInterface.h"
 #include <iostream>
 
 using namespace QuickSDL;
@@ -46,16 +46,29 @@ public:
 		Pos(Vector2(index * (float)m_width, Pos(SPACE::local).y));
 	}
 
-	void SetSelected(bool const& selected)
+	void SetHighlightSorted()
 	{
-		if (selected)
-		{
-			m_tex->MoveClipRect(12, 0);
-		}
-		else
-		{
-			m_tex->MoveClipRect(4, 0);
-		}
+		m_tex->MoveClipRect(12, 0);
+	}
+
+	void SetHighlightCurrent()
+	{
+		m_tex->MoveClipRect(8, 0);
+	}
+
+	void SetHighlightComparison()
+	{
+		m_tex->MoveClipRect(0, 0);
+	}
+
+	void SetHighlightBest()
+	{
+		m_tex->MoveClipRect(16, 0);
+	}
+
+	void ResetHighlight()
+	{
+		m_tex->MoveClipRect(4, 0);
 	}
 
 	void Render() override
@@ -71,9 +84,16 @@ private:
 };
 
 template <class T>
-class Visualizer : public GameEntity {
-
+class Visualizer : public VisualizerInterface  
+{
 public:
+
+	Visualizer()
+	{
+		m_title = new Texture(m_sortingAlgorithm.GetName(), "ariblk.ttf", 32, { 255, 255, 255 });
+		m_title->Parent(this);
+		m_title->Pos(VEC2_UP * (float)Graphics::Instance()->SCREEN_HEIGHT * 0.52f);
+	}
 
 	~Visualizer()
 	{
@@ -85,9 +105,12 @@ public:
 
 		delete m_anchor;
 		m_anchor = nullptr;
+
+		delete m_title;
+		m_title = nullptr;
 	}
 
-	void Initialize(std::vector<int> const& vec)
+	void Initialize(std::vector<int> const& vec) override
 	{
 		if (vec.size() < 1)
 		{
@@ -130,10 +153,13 @@ public:
 		{
 			m_items[i]->Render();
 		}
+
+		m_title->Render();
 	}
 
 private:
 
+	Texture* m_title;
 	GameEntity* m_anchor;
 	std::vector<VisualizerItem*> m_items;
 

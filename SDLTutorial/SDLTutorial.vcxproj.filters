@@ -46,9 +46,6 @@
     <Filter Include="Header Files\Visualizer">
       <UniqueIdentifier>{16188fef-38c4-4e97-9ad7-de0660fc18ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Visualizer">
-      <UniqueIdentifier>{58bf13af-2f8a-4111-b6d4-c9ebd8195f56}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MathHelper.h">
@@ -114,6 +111,15 @@
     <ClInclude Include="InsertionSortAlg.h">
       <Filter>Header Files\Visualizer</Filter>
     </ClInclude>
+    <ClInclude Include="SelectionSortAlg.h">
+      <Filter>Header Files\Visualizer</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualizerInterface.h">
+      <Filter>Header Files\Visualizer</Filter>
+    </ClInclude>
+    <ClInclude Include="BubbleSortAlg.h">
+      <Filter>Header Files\Visualizer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -169,9 +175,6 @@
     </ClCompile>
     <ClCompile Include="PerformanceTimer.cpp">
       <Filter>Source Files\Helper</Filter>
-    </ClCompile>
-    <ClCompile Include="InsertionSortAlg.cpp">
-      <Filter>Source Files\Visualizer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
